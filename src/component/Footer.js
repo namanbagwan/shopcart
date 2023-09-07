@@ -1,21 +1,62 @@
-import React, { useState } from "react";
-import logo from '../img/logo.jpg';
+import React from "react";
 import '../App.css';
-// import {IoMdArrowDropdown} from 'react-icons/io';
-import { BsCart3 } from 'react-icons/bs';
+
 function Footer() {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
-
     return (
-        <>
-            <footer>
-
-            </footer>
-        </>
+        <footer>
+            <div className="footer">
+                <div className="footer-list">
+                    <ul >
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Booking</a></li>
+                        <li><a href="#">Cart</a></li>
+                    </ul>
+                </div>
+                <div className="footer-list">
+                    <ul >
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Booking</a></li>
+                        <li><a href="#">Cart</a></li>
+                    </ul>
+                </div>
+                <div className="footer-list">
+                    <ul >
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Booking</a></li>
+                        <li><a href="#">Cart</a></li>
+                    </ul>
+                </div>
+                <div className="footer-list">
+                    <ul >
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Booking</a></li>
+                        <li><a href="#">Cart</a></li>
+                    </ul>
+                </div>
+                <div className="footer-list">
+                    <ul >
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Booking</a></li>
+                        <li><a href="#">Cart</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     );
 }
 
