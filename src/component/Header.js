@@ -3,7 +3,8 @@ import logo from '../img/logo.jpg';
 import '../App.css';
 // import {IoMdArrowDropdown} from 'react-icons/io';
 import { BsCart3 } from 'react-icons/bs';
-function Header() {
+import Category from "./Category";
+function Header({ categories, selectedCategory, onSelectCategory }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -27,9 +28,13 @@ function Header() {
             {isDropdownOpen && (
               <div className="dropdown-content">
                 <ul>
-                  <li><a href="#" className="dropdown">Option 1</a></li>
-                  <li><a href="#" className="dropdown">Option 2</a></li>
-                  <li><a href="#" className="dropdown">Option 3</a></li>
+                  <li>
+                    <Category
+                      categories={categories}
+                      selectedCategory={selectedCategory}
+                      onSelectCategory={onSelectCategory}
+                    />
+                  </li>
                 </ul>
               </div>
             )}
