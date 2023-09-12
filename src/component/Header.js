@@ -4,6 +4,7 @@ import '../App.css';
 // import {IoMdArrowDropdown} from 'react-icons/io';
 import { BsCart3 } from 'react-icons/bs';
 import Category from "./Category";
+import { Link } from "react-router-dom";
 function Header({ categories, selectedCategory, onSelectCategory }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -17,14 +18,14 @@ function Header({ categories, selectedCategory, onSelectCategory }) {
         <img src={logo} alt="Logo" width="400px" height="200px" />
         <div className="header">
           <ul style={{ marginLeft: "80px" }}>
-            <a href="#" className="menubar">Home</a>
-            <a href="#" className="menubar">About</a>
-            <a href="#" className="menubar">Contact</a>
-            <a href="#" className="menubar">Shop</a>
-            <a href="#" className="menubar">Booking</a>
-            <a href="#" className="menubar">Cart</a>
+            <Link to="/" className="menubar">Home</Link>
+            <Link to="/about" className="menubar">About</Link>
+            <Link to="/contact" className="menubar">Contact</Link>
+            <Link to="/shop" className="menubar">Shop</Link>
+            <Link to="/Bookig" className="menubar">Booking</Link>
+            <Link to="/cart" className="menubar">Cart</Link>
 
-            <a href="#" className="menubar" onClick={toggleDropdown}>Product</a>
+            <Link className="menubar" onClick={toggleDropdown}>Product</Link>
             {isDropdownOpen && (
               <div className="dropdown-content">
                 <ul>
@@ -38,7 +39,7 @@ function Header({ categories, selectedCategory, onSelectCategory }) {
                 </ul>
               </div>
             )}
-            <a href="#" className="cart"><BsCart3 /></a>
+            <Link to="/cart" className="cart"><BsCart3 /></Link>
 
           </ul>
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Category from './Category';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [data, setData] = useState([]);
@@ -51,14 +52,18 @@ function Home() {
           console.log(item, 'naman');
           return (
             <li key={item.id} className="item">
-              <div className="item-title">{item.title}</div>
+              <div className="item-title"><Link style={{ color: "black", textDecoration: "none", fontSize: "large" }} to={`/product/${item.id}`} target='_blank'>{item.title}</Link></div>
               <div className="item-image">
                 <img src={item.image} alt="" width="220px" height="300px" loading="lazy" />
               </div>
               <div className="item-button">
                 <p style={{ color: 'black', fontSize: '20px' }}>${item.price}</p>
               </div>
-              <div className="">{item.description}</div>
+              <div className="description">{item.description}</div>
+              <div className="button-container">
+                <button className="add-to-cart-button">Add To Cart</button>
+                <button className="order-now-button">Order Now</button>
+              </div>
             </li>
           );
         })}
