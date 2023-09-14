@@ -1,14 +1,10 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
 
-function About(){
-    return(
+function About() {
+    return (
         <>
-        <Header/>
-        <h1>naman</h1>
-        <Footer/>
+            <h1>naman</h1>
         </>
     )
 }
- export default About;
+export default About;

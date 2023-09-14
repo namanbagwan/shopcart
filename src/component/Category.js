@@ -2,22 +2,25 @@ import React from 'react';
 
 function Category({ categories, selectedCategory, onSelectCategory }) {
   return (
-    <div className="category-section">
-      <button
-        className={`category-button ${selectedCategory === 'all' ? 'active' : ''}`}
-        onClick={() => onSelectCategory('all')}
-      >
-        All
-      </button>
-      {categories.map((category) => (
-        <button
-          key={category}
-          className={`category-button ${selectedCategory === category ? 'active' : ''}`}
-          onClick={() => onSelectCategory(category)}
+    <div className="category-sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li
+          className={selectedCategory === 'all' ? 'active' : ''}
+          onClick={() => onSelectCategory('all')}
         >
-          {category}
-        </button>
-      ))}
+          All
+        </li>
+        {categories.map((category) => (
+          <li
+            key={category}
+            className={selectedCategory === category ? 'active' : ''}
+            onClick={() => onSelectCategory(category)}
+          >
+            {category}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -9,10 +9,13 @@ import Contact from './component/Contact';
 import Product from './component/Product';
 import Shop from './component/Shop';
 import PageError from './component/Page404';
+import Header from './component/Header';
+import Footer from './component/Footer';
 
 function App() {
   return (
     <div>
+      <Header/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -23,6 +26,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/*" element={<PageError/>}/>
       </Routes>
+      <Footer/>
     </div>
   );
 }

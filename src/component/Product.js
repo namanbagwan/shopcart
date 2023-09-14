@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
 
-function Product() {
+
+function Product(props) {
+    const { onAddToCart } = props;
     const { id } = useParams(); // Get the product ID from the URL
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(0); // Initialize quantity with 1
@@ -31,10 +31,11 @@ function Product() {
             setQuantity(quantity - 1);
         }
     };
-   
+
+
     return (
         <>
-            <Header />
+
             <div className='container'>
                 {product && (
                     <div className="product-details">
@@ -63,7 +64,7 @@ function Product() {
                     </div>
                 )}
             </div>
-            <Footer />
+
         </>
     );
 }

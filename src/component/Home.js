@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import Category from './Category';
 import { Link } from 'react-router-dom';
+import Cart from './Cart';
+
 
 function Home() {
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all'); // Default to showing all products
-
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [quantities, setQuantities] = useState({});
+  const [cartItems, setCartItems] = useState([]); 
+  console.log(cartItems,"cartItems")
   useEffect(() => {
     // Fetch data from the API
     fetch('https://fakestoreapi.com/products/')
@@ -18,7 +20,6 @@ function Home() {
 
         // Extract and set unique categories from the data
         const uniqueCategories = [...new Set(data.map((item) => item.category))];
-        console.log(uniqueCategories, "uniquecat")
         setCategories(uniqueCategories);
       })
       .catch((error) => {
@@ -30,47 +31,117 @@ function Home() {
     setSelectedCategory(category);
   };
 
-  const filteredData =
-    selectedCategory === 'all'
-      ? data
-      : data.filter((item) => item.category === selectedCategory);
+  const handleIncreaseQuantity = (productId) => {
+    // Increase the product quantity
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: (prevQuantities[productId] || 0) + 1,
+    }));
+  };
 
-  return (<>
-    <Header
-      categories={categories}
-      selectedCategory={selectedCategory}
-      onSelectCategory={filterByCategory}
-    />
-    <div className='container'>
-      <Category
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onSelectCategory={filterByCategory}
-      />
-      <ul className="item-list">
-        {filteredData.map((item) => {
-          console.log(item, 'naman');
-          return (
-            <li key={item.id} className="item">
-              <div className="item-title"><Link style={{ color: "black", textDecoration: "none", fontSize: "large" }} to={`/product/${item.id}`} target='_blank'>{item.title}</Link></div>
-              <div className="item-image">
-                <img src={item.image} alt="" width="220px" height="300px" loading="lazy" />
-              </div>
-              <div className="item-button">
-                <p style={{ color: 'black', fontSize: '20px' }}>${item.price}</p>
-              </div>
-              <div className="description">{item.description}</div>
-              <div className="button-container">
-                <button className="add-to-cart-button">Add To Cart</button>
-                <button className="order-now-button">Order Now</button>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-    <Footer />
-  </>
+  const handleDecreaseQuantity = (productId) => {
+    // Decrease the product quantity, but ensure it doesn't go below 0
+    if (quantities[productId] > 0) {
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [productId]: prevQuantities[productId] - 1,
+      }));
+    }
+  };
+
+  const calculateSubtotal = () => {
+    let subtotal = 0;
+    for (const productId in quantities) {
+      const quantity = quantities[productId];
+      const product = data.find((item) => item.id === parseInt(productId));
+      if (product) {
+        subtotal += quantity * product.price;
+      }
+    }
+    return subtotal.toFixed(2);
+  };
+
+  const addToCart = (productId) => {
+    const product = data.find((item) => item.id === parseInt(productId));
+    if (product) {
+      const updatedCartItems = [...cartItems];
+      const existingCartItemIndex = updatedCartItems.findIndex((item) => item.id === product.id);
+  
+      if (existingCartItemIndex !== -1) {
+        // If the item is already in the cart, increase its quantity
+        updatedCartItems[existingCartItemIndex].quantity += 1;
+      } else {
+        // If it's a new item, add it to the cart
+        updatedCartItems.push({ ...product, quantity: 1 });
+      }
+      setCartItems(adddata.push(updatedCartItems));
+  
+      // setCartItems(adddata.push(up));
+    }
+  };
+  const adddata=[];
+  console.log(adddata,"fdbhfsdhmgfk")
+
+  return (
+    <>
+      <div className='container'>
+
+        <Category
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={filterByCategory}
+        />
+
+        <div className="total-subtotal">
+          Total Subtotal: ${calculateSubtotal()}
+        </div>
+        <ul className="item-list">
+          {data.map((item) => {
+            // Check if the selected category is 'all' or if the item's category matches the selected category
+            const isCategoryMatch = selectedCategory === 'all' || selectedCategory === item.category;
+
+            // Render the item only if it matches the selected category
+            return (
+              isCategoryMatch && (
+                <li key={item.id} className="item">
+                  <div className="item-title">
+                    <Link
+                      style={{ color: "black", textDecoration: "none", fontSize: "large" }}
+                      to={`/product/${item.id}`}
+                      target="_blank"
+                    >
+                      {item.title}
+                    </Link>
+                  </div>
+                  <div className="item-image">
+                    <img src={item.image} alt="" width="220px" height="300px" loading="lazy" />
+                  </div>
+                  <div className="item-button">
+                    <p style={{ color: 'black', fontSize: '20px' }}>${item.price}</p>
+                  </div>
+                  <div className="quantity-container">
+                    <button className="quantity-button" onClick={() => handleDecreaseQuantity(item.id)}>
+                      -
+                    </button>
+                    <span className="quantity">{quantities[item.id] || 0}</span>
+                    <button className="quantity-button" onClick={() => handleIncreaseQuantity(item.id)}>
+                      +
+                    </button>
+                  </div>
+                  <div className="button-container1">
+                    <button className="add-to-cart-button" onClick={() => addToCart(item.id)}>
+                     Add To Cart 
+                    </button>
+                  </div>
+                </li>
+              )
+            );
+          })}
+        </ul>
+        <Cart cartItems={cartItems} />
+      </div>
+
+    </>
   );
 }
 
