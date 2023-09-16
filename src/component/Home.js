@@ -9,8 +9,11 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [quantities, setQuantities] = useState({});
-  const [cartItems, setCartItems] = useState([]); 
-  console.log(cartItems,"cartItems")
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  });
+  
   useEffect(() => {
     // Fetch data from the API
     fetch('https://fakestoreapi.com/products/')
@@ -65,22 +68,25 @@ function Home() {
     const product = data.find((item) => item.id === parseInt(productId));
     if (product) {
       const updatedCartItems = [...cartItems];
-      const existingCartItemIndex = updatedCartItems.findIndex((item) => item.id === product.id);
+      const existingCartItem = updatedCartItems.find((item) => item.id === product.id);
   
-      if (existingCartItemIndex !== -1) {
-        // If the item is already in the cart, increase its quantity
-        updatedCartItems[existingCartItemIndex].quantity += 1;
+      if (existingCartItem) {
+        // If the item is already in the cart, increase its quantity by 1
+        existingCartItem.quantity += 1;
       } else {
-        // If it's a new item, add it to the cart
+        // If it's a new item, add it to the cart with a quantity of 1
         updatedCartItems.push({ ...product, quantity: 1 });
       }
-      setCartItems(adddata.push(updatedCartItems));
   
-      // setCartItems(adddata.push(up));
+      // Update the state
+      setCartItems(updatedCartItems);
+  
+      // Update localStorage
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     }
   };
-  const adddata=[];
-  console.log(adddata,"fdbhfsdhmgfk")
+  
+  
 
   return (
     <>
