@@ -412,17 +412,21 @@ ul {
 
 /*cart*/
 .cart-container {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .cart-title {
   font-size: 24px;
-  margin-bottom: 10px;
+  margin: 0;
+}
+
+.empty-cart-message {
+  font-size: 18px;
 }
 
 .cart-list {
@@ -434,8 +438,9 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .cart-item-details {
@@ -445,41 +450,78 @@ ul {
 
 .item-title {
   font-size: 18px;
-  margin-right: 10px;
-  color: black;
-}
-
-.item-image {
-  width: 300px;  
-  margin-right: 10px;
-}
-
-.quantity-buttons button {
- 
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-right: 5px;
+  margin: 0;
 }
 
 .item-quantity {
   font-size: 16px;
+  margin: 0 10px;
 }
 
 .item-price {
   font-size: 18px;
+  margin: 0;
+}
+
+.quantity-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.quantity-buttons button:hover {
+  background-color: #0056b3;
 }
 
 .remove-button {
   background-color: #dc3545;
   color: #fff;
   border: none;
-  padding: 5px 10px;
   border-radius: 5px;
-  cursor: pointer;
+  padding: 5px 10px;
   font-size: 16px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background-color: #c82333;
+}
+
+
+/*shop*/
+.shop-container{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;  
+}
+.shop-title{
+  justify-content: center;
+  display: flex;  
+  font-size: larger;
+  margin-bottom: 20px;
+}
+
+.shop-item{
+  flex-basis: calc(33.33% - 20px);
+  /* Three items per column with spacing */
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  margin: 10px;
+}
+
+.shop-image{
+  height: 400px;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+
 }
