@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css'; // Import your CSS file for Cart styling
+import { Link } from 'react-router-dom';
 
 function Cart() {
   // Initialize cartItems state by reading from localStorage
@@ -66,9 +67,10 @@ function Cart() {
           {cartItems.map((item) => (
             <li key={item.id} className="cart-item">
               <div className="cart-item-details">              
-                <p className="item-title">{item.title}</p>
+                <p className="item-title">
+                  <Link to={`/product/${item.id}`} style={{color:"black"}}>{item.title}</Link></p>
                 <img src={item.image} alt={item.title} className="item-image" />
-                <div className="quantity-buttons">
+                <div className="quantity-buttons" style={{display:"contents"}}>
                   <button onClick={() => decreaseQuantity(item.id)} className="quantity-button">
                     -
                   </button>

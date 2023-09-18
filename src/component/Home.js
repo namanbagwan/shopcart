@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Category from './Category';
 import { Link } from 'react-router-dom';
-import Cart from './Cart';
-
 
 function Home() {
   const [data, setData] = useState([]);
@@ -86,68 +84,88 @@ function Home() {
     }
   };
   
+  const removefromcart = (productId) => {
+    const product = data.find((item) => item.id === parseInt(productId));
+    if (product) {
+      const updatedCartItems = [...cartItems];
+      const existingCartItem = updatedCartItems.find((item) => item.id === product.id);
   
+      if (existingCartItem) {
+        // If the item is already in the cart, decrease its quantity by 1
+        existingCartItem.quantity -= 1;
+        if (existingCartItem.quantity === 0) {
+          // If the quantity reaches 0, remove the item from the cart
+          const index = updatedCartItems.indexOf(existingCartItem);
+          if (index !== -1) {
+            updatedCartItems.splice(index, 1);
+          }
+        }
+      }
+  
+      // Update the state
+      setCartItems(updatedCartItems);
+  
+      // Update localStorage
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    }
+  };
 
   return (
-    <>
-      <div className='container'>
-
-        <Category
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onSelectCategory={filterByCategory}
-        />
-
-        <div className="total-subtotal">
-          Total Subtotal: ${calculateSubtotal()}
-        </div>
-        <ul className="item-list">
-          {data.map((item) => {
-            // Check if the selected category is 'all' or if the item's category matches the selected category
-            const isCategoryMatch = selectedCategory === 'all' || selectedCategory === item.category;
-
-            // Render the item only if it matches the selected category
-            return (
-              isCategoryMatch && (
-                <li key={item.id} className="item">
-                  <div className="item-title">
-                    <Link
-                      style={{ color: "black", textDecoration: "none", fontSize: "large" }}
-                      to={`/product/${item.id}`}
-                      target="_blank"
-                    >
-                      {item.title}
-                    </Link>
-                  </div>
-                  <div className="item-image">
-                    <img src={item.image} alt="" width="220px" height="300px" loading="lazy" />
-                  </div>
-                  <div className="item-button">
-                    <p style={{ color: 'black', fontSize: '20px' }}>${item.price}</p>
-                  </div>
-                  <div className="quantity-container">
-                    <button className="quantity-button" onClick={() => handleDecreaseQuantity(item.id)}>
-                      -
-                    </button>
-                    <span className="quantity">{quantities[item.id] || 0}</span>
-                    <button className="quantity-button" onClick={() => handleIncreaseQuantity(item.id)}>
-                      +
-                    </button>
-                  </div>
-                  <div className="button-container1">
-                    <button className="add-to-cart-button" onClick={() => addToCart(item.id)}>
-                     Add To Cart 
-                    </button>
-                  </div>
-                </li>
-              )
-            );
-          })}
-        </ul>
-        <Cart cartItems={cartItems} />
+    <div className='container'>
+      <Category
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={filterByCategory}
+      />
+      <div className="total-subtotal">
+        Total Subtotal: ${calculateSubtotal()}
       </div>
-
-    </>
+      <ul className="item-list">
+        {data.map((item) => {
+          // Check if the selected category is 'all' or if the item's category matches the selected category
+          const isCategoryMatch = selectedCategory === 'all' || selectedCategory === item.category;
+          // Render the item only if it matches the selected category
+          return (
+            isCategoryMatch && (
+              <li key={item.id} className="item">
+                <div className="item-title">
+                  <Link
+                    style={{ color: "black", textDecoration: "none", fontSize: "large" }}
+                    to={`/product/${item.id}`}
+                    target="_blank"
+                  >
+                    {item.title}
+                  </Link>
+                </div>
+                <div className="item-image">
+                  <img src={item.image} alt="" width="220px" height="300px" loading="lazy" />
+                </div>
+                <div className="item-button">
+                  <p style={{ color: 'black', fontSize: '20px' }}>${item.price}</p>
+                </div>
+                <div className="quantity-container">
+                  <button className="quantity-button" onClick={() => handleDecreaseQuantity(item.id)}>
+                    -
+                  </button>
+                  <span className="quantity">{quantities[item.id] || 0}</span>
+                  <button className="quantity-button" onClick={() => handleIncreaseQuantity(item.id)}>
+                    +
+                  </button>
+                </div>
+                <div className="button-container1">
+                  <button className="add-to-cart-button" onClick={() => addToCart(item.id)}>
+                    Add To Cart 
+                  </button>
+                  <button className="add-to-cart-button" onClick={() => removefromcart(item.id)}>
+                    Remove From Cart
+                  </button>
+                </div>
+              </li>
+            )
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
